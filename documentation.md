@@ -1,7 +1,5 @@
  ***summoner_finder***
- 
- **League of Legend summoner finder **
- 
+
  **About**
  
 Hello It us my first big project. 
