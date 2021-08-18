@@ -18,9 +18,7 @@ def main():
             os.system('cls' if os.name == 'nt' else 'clear')
             sys.exit(0)
 
-
-
-
+    #Finds summoner winrate
     def summoner_winrate(region, player_name):
         if region == 'kr':
             res = requests.get('https://.op.gg/summoner/userName='+player_name)
@@ -66,6 +64,52 @@ def main():
             else:
                 rank = elem[0].text.strip()
                 return rank
+   
+    # Finds summoner level
+    def player_level(region, player_name):
+        if region == 'kr':
+            res = requests.get('https://.op.gg/summoner/userName='+player_name)
+            res.raise_for_status()
+            soup = bs4.BeautifulSoup(res.text, 'html.parser')
+            elem = soup.select('body > div.l-wrap.l-wrap--summoner > div.l-container > div > div > div.Header > div.Face > div > span')
+            if elem == []:
+                restart_program()
+            else:
+                player_level = elem[0].text.strip()
+                return player_level 
+        else:
+            res = requests.get('https://'+region+'.op.gg/summoner/userName='+player_name)
+            res.raise_for_status()
+            soup = bs4.BeautifulSoup(res.text, 'html.parser')
+            elem = soup.select('body > div.l-wrap.l-wrap--summoner > div.l-container > div > div > div.Header > div.Face > div > span')
+            if elem == []:
+                restart_program()
+            else:
+                player_level = elem[0].text.strip()
+                return player_level
+
+    def lp(region, player_name):
+         if region == 'kr':
+            res = requests.get('https://.op.gg/summoner/userName='+player_name)
+            res.raise_for_status()
+            soup = bs4.BeautifulSoup(res.text, 'html.parser')
+            elem = soup.select('#SummonerLayoutContent > div.tabItem.Content.SummonerLayoutContent.summonerLayout-summary > div.SideContent > div.TierBox.Box > div > div.TierRankInfo > div.TierInfo > span.LeaguePoints')
+            if elem == []:
+                restart_program()
+            else:
+                player_lp = elem[0].text.strip()
+                return player_lp 
+         else:
+            res = requests.get('https://'+region+'.op.gg/summoner/userName='+player_name)
+            res.raise_for_status()
+            soup = bs4.BeautifulSoup(res.text, 'html.parser')
+            elem = soup.select('#SummonerLayoutContent > div.tabItem.Content.SummonerLayoutContent.summonerLayout-summary > div.SideContent > div.TierBox.Box > div > div.TierRankInfo > div.TierInfo > span.LeaguePoints')
+            if elem == []:
+                restart_program()
+            else:
+                player_lp = elem[0].text.strip()
+                return player_lp
+   
     #main info  
     list_regions = ['eune', 'lan', 'euw', 'jp','oce', 'br', 'las', 'ru', 'tr', 'kr','na' ]
     end_program = False
@@ -87,11 +131,14 @@ def main():
         #runs the function
         winrate = summoner_winrate(region, player_name)   
         rank = summoner_rank(region,player_name)
+        level =  player_level(region, player_name)
+        player_lp = lp(region, player_name)
         os.system('cls' if os.name == 'nt' else 'clear')
 
         #output
+        print(f'{player_name} level is {level}\n')
         print(f'{player_name} is from {region} has '+winrate)
-        print(f'\nHe is {rank} rank\n')
+        print(f'\nHe is {rank} ({player_lp})\n')
         os.system("pause")
         
         #ask if the user wants to stop the loop
