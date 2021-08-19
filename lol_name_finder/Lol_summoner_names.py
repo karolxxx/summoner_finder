@@ -3,6 +3,8 @@ import bs4, requests
 import os
 from logo import logo
 import sys
+from prettytable import PrettyTable
+
 
 def main():
     #Find summoner winrate
@@ -129,6 +131,7 @@ def main():
         player_name = input('\nEnter a player name:\n')
         
         #runs the function
+        table = PrettyTable()
         winrate = summoner_winrate(region, player_name)   
         rank = summoner_rank(region,player_name)
         level =  player_level(region, player_name)
@@ -136,9 +139,9 @@ def main():
         os.system('cls' if os.name == 'nt' else 'clear')
 
         #output
-        print(f'{player_name} level is {level}\n')
-        print(f'{player_name} is from {region} has '+winrate)
-        print(f'\nHe is {rank} ({player_lp})\n')
+        table.field_names = ['summoner','level', 'rank','lp','winrate', 'region'] 
+        table.add_row([player_name, level, rank, player_lp, winrate, region   ])
+        print(table)
         os.system("pause")
         
         #ask if the user wants to stop the loop
