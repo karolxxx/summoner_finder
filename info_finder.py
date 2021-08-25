@@ -61,5 +61,5 @@ class Finder:
        if elem == []:
           return False
        else:
-          lp = elem[0].text
+          lp = elem[0].text.strip()
           return lp 
