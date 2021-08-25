@@ -1,0 +1,21 @@
+import bs4, requests
+regions = input('Please enter a region: ')
+player = input('Please enter a username: ')
+class Finder:
+
+    def __init__(self):
+        super().__init__()
+        self.region = regions
+        self.username = player
+
+
+    def winrate(self,):
+        res = requests.get('https:/'+self.region+'.op.gg/summoner/userName='+self.username)
+        res.raise_for_status()
+        soup = bs4.BeautifulSoup(res.text, 'html.parser')
+        elem = soup.select('#SummonerLayoutContent > div.tabItem.Content.SummonerLayoutContent.summonerLayout-summary > div.SideContent > div.TierBox.Box > div > div.TierRankInfo > div.TierInfo > span.WinLose > span.winratio')
+        if elem == []:
+            return False
+        else:
+            winrate = elem[0].text.strip()
+                
