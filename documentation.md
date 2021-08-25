@@ -11,4 +11,4 @@
  1. Download the file as zip
  2. Execute the file to your computer
  3. Open folder
- 4. Run lol_finder_name.exe
+ 4. Run main.exe
