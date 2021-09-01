@@ -1,0 +1,7 @@
+from info_finder import Finder
+
+info = Finder()
+program_in_progress = True
+
+while program_in_progress == True:
+    info.winrate()
